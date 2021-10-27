@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "463815099240",
+    "project_id": "muvmee-flutter",
+    "storage_bucket": "muvmee-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463815099240:android:5050a77d2673bcc968ccdd",
+        "android_client_info": {
+          "package_name": "com.example.flutter_tutorial"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463815099240-soagtbpcr6u66tdkg1okvj8ddj00t9t6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG5NxJu4-IIfvLdwRT8Fs4exZ4omOHNz0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463815099240-soagtbpcr6u66tdkg1okvj8ddj00t9t6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
