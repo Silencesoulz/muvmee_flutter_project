@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tutorial/camerascreen.dart';
+import 'package:flutter_tutorial/pagecontrol.dart';
 import 'package:flutter_tutorial/register.dart';
 import 'package:flutter_tutorial/homepage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -84,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final loginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.lightBlue,
+      color: Colors.blue.shade500,
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -177,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
           .then((uid) => {
                 Fluttertoast.showToast(msg: "Login Successful"),
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => HomeScreen()))
+                    MaterialPageRoute(builder: (context) => PageControl()))
               })
           .catchError((e) {
         Fluttertoast.showToast(msg: e!.message);
