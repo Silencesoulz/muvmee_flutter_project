@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
               gradient: LinearGradient(
                   begin: Alignment.topRight,
                   end: Alignment.bottomRight,
-                  colors: [Color(0xFFF6F6F6), Color(0xFFF6F6F6)])),
+                  colors: [Color(0xFFF6F6F6), Color(0xFF1597E5)])),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     "MuvMee",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Color(0xFF1597E5),
+                      color: Colors.white,
                       fontFamily: "Nunito",
                       fontSize: 34,
                     ),
