@@ -30,17 +30,16 @@ dependencies:
   flutter:
     sdk: flutter
 
-  firebase_core: ^1.7.0
-  # Online Storage For Files
+  #firebase
+  firebase_core: ^1.10.0
   firebase_storage:  ^10.0.5
-  # Online Database For Dataa
-  cloud_firestore: ^2.5.3
-  #Authentication Such as Google SignIn , local auth
+  cloud_firestore: ^3.1.0
   firebase_auth: ^3.1.3
-  google_sign_in: ^5.1.1
-  #Google Icon
+  #google sign in
+  google_sign_in: ^5.2.1
+  #font awesome
   font_awesome_flutter: ^9.1.0
-  # State Management
+  #provider
   provider: ^5.0.0
   #path
   path: ^1.8.0
@@ -56,7 +55,8 @@ dependencies:
   basic_utils: ^3.8.1
   #splash screen animation
   animated_splash_screen: ^1.1.0
-
+  #signin button
+  flutter_signin_button: ^2.0.0
   #bottom navbar
   curved_navigation_bar: ^1.0.1
 

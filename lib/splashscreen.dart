@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tutorial/google_page_control.dart';
 import 'dart:async';
 import 'package:flutter_tutorial/login.dart';
 
@@ -16,8 +17,8 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(
         Duration(seconds: 3),
-        () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LoginScreen())));
+        () => Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => GooglePageControl())));
   }
 
   @override
@@ -30,7 +31,11 @@ class _SplashScreenState extends State<SplashScreen> {
               gradient: LinearGradient(
                   begin: Alignment.topRight,
                   end: Alignment.bottomRight,
-                  colors: [Color(0xFFF6F6F6), Color(0xFF1597E5)])),
+                  colors: [
+                Color(0xFFFFFFFF),
+                Color(0xFFF6F6F6),
+                Color(0xFF1597E5)
+              ])),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceAround,

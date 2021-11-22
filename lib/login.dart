@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tutorial/camerascreen.dart';
+import 'package:flutter_tutorial/google_sign_in.dart';
 import 'package:flutter_tutorial/pagecontrol.dart';
 import 'package:flutter_tutorial/register.dart';
-import 'package:flutter_tutorial/homepage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -136,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     loginButton,
                     SizedBox(
-                      height: 15,
+                      height: 18,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -185,6 +186,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             )),
                       ),
                     ]),
+                    SizedBox(
+                      height: 18,
+                    ),
+                    SignInButton(
+                      Buttons.Google,
+                      text: "    Sign in with Google",
+                      onPressed: () {
+                        final provider = Provider.of<GoogleSignInProvider>(
+                            context,
+                            listen: false);
+                        provider.googleLogin();
+                      },
+                    )
                   ],
                 ),
               ),
@@ -206,7 +220,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     MaterialPageRoute(builder: (context) => PageControl()))
               })
           .catchError((e) {
-        Fluttertoast.showToast(msg: e!.message);
+        Fluttertoast.showToast(msg: e!.message, backgroundColor: Colors.red);
       });
     }
   }
