@@ -59,7 +59,8 @@ dependencies:
   flutter_signin_button: ^2.0.0
   #bottom navbar
   curved_navigation_bar: ^1.0.1
-
+  #gradient widget
+  gradient_widgets: ^0.6.0
   #camera
   camera: ^0.9.4+3
 

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_tutorial/google_page_control.dart';
 import 'package:flutter_tutorial/google_sign_in.dart';
-import 'package:flutter_tutorial/login.dart';
 import 'package:flutter_tutorial/model/user_model.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:flutter_tutorial/settingpagecomponents/account_page.dart';
@@ -89,5 +87,5 @@ Widget buildSendFeedback(BuildContext context) => SimpleSettingsTile(
 Future<void> logout(BuildContext context) async {
   await FirebaseAuth.instance.signOut();
   Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => GooglePageControl()));
+      MaterialPageRoute(builder: (context) => StatePageControl()));
 }
