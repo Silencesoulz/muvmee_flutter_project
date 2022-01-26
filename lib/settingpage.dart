@@ -49,6 +49,13 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                 ],
               ),
+              const SizedBox(
+                height: 200,
+              ),
+              Text(
+                "MuvMee Official ",
+                textAlign: TextAlign.right,
+              )
             ],
           ),
         ),
@@ -81,7 +88,9 @@ Widget buildSendFeedback(BuildContext context) => SimpleSettingsTile(
       title: 'Send Feedback',
       subtitle: '',
       leading: IconWidget(icon: Icons.feedback_sharp, color: Colors.lightBlue),
-      onTap: () {},
+      onTap: () {
+        Fluttertoast.showToast(msg: "Send Feedback");
+      },
     );
 
 Future<void> logout(BuildContext context) async {

@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/boardingscreen/slide.dart';
+import 'package:flutter_tutorial/google_page_control.dart';
 import 'package:flutter_tutorial/login.dart';
 import 'package:flutter_tutorial/pagecontrol.dart';
 import 'package:gradient_widgets/gradient_widgets.dart';
+import 'package:flutter_tutorial/google_page_control.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BoardingPage extends StatefulWidget {
   @override
@@ -21,14 +24,22 @@ class _BoardingPageState extends State<BoardingPage> {
   void initState() {
     _currentPage = 0;
     _slides = [
-      Slide("assets/images/splashpic.png", "Hi"),
-      Slide("assets/images/splashpic.png", "Hi2"),
-      Slide("assets/images/splashpic.png", "Hi3"),
+      Slide("assets/images/splash.png", "Welcome to MuvMee Application"),
+      Slide("assets/images/solving.png",
+          "Our responsibility are solving double parking"),
+      Slide(
+          "assets/images/community.png", "Let's make our community better :)"),
     ];
     _pageController = PageController(initialPage: _currentPage);
     super.initState();
   }
 
+  @override
+  _storeOnBoardInfo() async {
+    int isViewed = 0;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('onBoard', isViewed);
+  }
   // List for contain build slides
 
   List<Widget> _buildSlides() {
@@ -125,11 +136,12 @@ class _BoardingPageState extends State<BoardingPage> {
                           foregroundColor:
                               MaterialStateProperty.all<Color>(Colors.blue),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
+                          await _storeOnBoardInfo();
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PageControl()));
+                                  builder: (context) => StatePageControl()));
                         },
                         child: Text('Getting Started')),
                   ),

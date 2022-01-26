@@ -63,7 +63,8 @@ dependencies:
   gradient_widgets: ^0.6.0
   #camera
   camera: ^0.9.4+3
-
+  #shared preference for onboarding screen
+  shared_preferences: ^2.0.12
 dev_dependencies:
   flutter_test:
     sdk: flutter
