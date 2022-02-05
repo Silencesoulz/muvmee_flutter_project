@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class EditProfile extends StatefulWidget {
-  const EditProfile({Key? key}) : super(key: key);
+class VerificationPage extends StatefulWidget {
+  const VerificationPage({Key? key}) : super(key: key);
 
   @override
-  _EditProfileState createState() => _EditProfileState();
+  _VerificationPageState createState() => _VerificationPageState();
 }
 
-class _EditProfileState extends State<EditProfile> {
+class _VerificationPageState extends State<VerificationPage> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -41,37 +41,6 @@ class _EditProfileState extends State<EditProfile> {
                         "assets/images/splash.png",
                         fit: BoxFit.contain,
                       ),
-                    ),
-                    SizedBox(
-                      height: 24,
-                    ),
-                    //firstNameField,
-                    SizedBox(
-                      height: 24,
-                    ),
-                    //lastNameField,
-                    SizedBox(
-                      height: 24,
-                    ),
-                    //licensePlateField,
-                    SizedBox(
-                      height: 24,
-                    ),
-                    //emailField,
-                    SizedBox(
-                      height: 24,
-                    ),
-                    //passwordField,
-                    SizedBox(
-                      height: 24,
-                    ),
-                    //confirmPasswordField,
-                    SizedBox(
-                      height: 40,
-                    ),
-                    //signUpButton,
-                    SizedBox(
-                      height: 19,
                     ),
                   ],
                 ),

@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tutorial/login.dart';
 import 'package:flutter_tutorial/model/user_model.dart';
+import 'package:flutter_tutorial/settingpagecomponents/verfication_page.dart';
+import 'package:path/path.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -52,27 +54,74 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
+              children: [
                 Text(
-                  " ยินดีต้อนรับคุณ ${loggedInUser.firstName} \u{1F44B}",
+                  " Welcome \u{1F44B} , ${loggedInUser.firstName} ",
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 34,
                 ),
-                Text(
-                    " ชื่อ-นามสกุล : ${loggedInUser.firstName} ${loggedInUser.lastName}",
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
-                    )),
-                Text("หมายเลขทะเบียน : ${loggedInUser.licenseplate}",
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
-                    )),
+                CircleAvatar(
+                  backgroundColor: Colors.blueGrey,
+                  radius: 54,
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundImage:
+                        NetworkImage(loggedInUser.displayIMG.toString()),
+                  ),
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(children: <TextSpan>[
+                    TextSpan(
+                        text: "Name: ",
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                        )),
+                    TextSpan(
+                        text: "${loggedInUser.firstName}",
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600)),
+                  ]),
+                ),
+                SizedBox(
+                  height: 22,
+                ),
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(children: <TextSpan>[
+                    TextSpan(
+                        text: "License plate : ",
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 17,
+                        )),
+                    TextSpan(
+                      text: "${loggedInUser.licenseplate}",
+                      style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: Colors.blueAccent,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => VerificationPage()));
+                        },
+                    ),
+                  ]),
+                ),
                 SizedBox(
                   height: 100,
                 ),

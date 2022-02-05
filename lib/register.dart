@@ -22,7 +22,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final firstNameEditingController = new TextEditingController();
   final lastNameEditingController = new TextEditingController();
   final emailEditingController = new TextEditingController();
-  final licenseplateEditingController = new TextEditingController();
+  //final licenseplateEditingController = new TextEditingController();
   final passwordEditingController = new TextEditingController();
   final confirmPasswordEditingController = new TextEditingController();
 
@@ -84,31 +84,31 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
 
     // License plate field
-    final licensePlateField = TextFormField(
-      autofocus: false,
-      controller: licenseplateEditingController,
-      keyboardType: TextInputType.text,
-      validator: (value) {
-        RegExp regex = new RegExp(r'^.{1,}$');
-        if (value!.isEmpty) {
-          return ("Please enter your License plate number");
-        }
-        return null;
-      },
-      onSaved: (value) {
-        licenseplateEditingController.text = value!;
-      },
-      textInputAction: TextInputAction.next,
-      decoration: InputDecoration(
-        prefixIcon: Icon(Icons.format_list_numbered_sharp),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "License plate number (Ex.1กก1111)",
-        hintMaxLines: 2,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-    );
+    // final licensePlateField = TextFormField(
+    //   autofocus: false,
+    //   controller: licenseplateEditingController,
+    //   keyboardType: TextInputType.text,
+    //   validator: (value) {
+    //     RegExp regex = new RegExp(r'^.{1,}$');
+    //     if (value!.isEmpty) {
+    //       return ("Please enter your License plate number");
+    //     }
+    //     return null;
+    //   },
+    //   onSaved: (value) {
+    //     licenseplateEditingController.text = value!;
+    //   },
+    //   textInputAction: TextInputAction.next,
+    //   decoration: InputDecoration(
+    //     prefixIcon: Icon(Icons.format_list_numbered_sharp),
+    //     contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+    //     hintText: "License plate number (Ex.1กก1111)",
+    //     hintMaxLines: 2,
+    //     border: OutlineInputBorder(
+    //       borderRadius: BorderRadius.circular(10),
+    //     ),
+    //   ),
+    // );
 
     // email field
     final emailField = TextFormField(
@@ -238,7 +238,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(
-                      height: 180,
+                      height: 200,
                       child: Image.asset(
                         "assets/images/splash.png",
                         fit: BoxFit.contain,
@@ -255,10 +255,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     SizedBox(
                       height: 24,
                     ),
-                    licensePlateField,
-                    SizedBox(
-                      height: 24,
-                    ),
+                    //licensePlateField,
+                    // SizedBox(
+                    //   height: 24,
+                    // ),
                     emailField,
                     SizedBox(
                       height: 24,
@@ -306,7 +306,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
-
+    String licenseInit = "Verify your license plate.";
+    String ImageURL = "https://picsum.photos/id/514/200/300";
     UserModel userModel = UserModel();
 
     // writing all the values
@@ -314,7 +315,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     userModel.uid = user.uid;
     userModel.firstName = firstNameEditingController.text;
     userModel.lastName = lastNameEditingController.text;
-    userModel.licenseplate = licenseplateEditingController.text;
+    userModel.licenseplate = licenseInit;
+    userModel.displayIMG = ImageURL;
 
     await firebaseFirestore
         .collection("users")

@@ -7,6 +7,7 @@ import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:flutter_tutorial/settingpagecomponents/account_page.dart';
 import 'package:flutter_tutorial/settingpagecomponents/header_page.dart';
 import 'package:flutter_tutorial/settingpagecomponents/icon_widget.dart';
+import 'package:flutter_tutorial/settingpagecomponents/verfication_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
@@ -32,6 +33,7 @@ class _SettingPageState extends State<SettingPage> {
                 children: <Widget>[
                   HeaderPage(),
                   AccountPage(),
+                  buildLicenseVerification(),
                 ],
               ),
               const SizedBox(
@@ -59,6 +61,17 @@ class _SettingPageState extends State<SettingPage> {
             ],
           ),
         ),
+      );
+
+  Widget buildLicenseVerification() => SimpleSettingsTile(
+        title: 'Verification',
+        subtitle: 'License plate No.',
+        leading: IconWidget(
+            icon: Icons.verified_outlined, color: Colors.yellow.shade700),
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => VerificationPage()));
+        },
       );
 
   Widget buildLogout() => SimpleSettingsTile(
