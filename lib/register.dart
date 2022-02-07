@@ -307,7 +307,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
     String licenseInit = "Verify your license plate.";
-    String ImageURL = "https://picsum.photos/id/514/200/300";
+    String ImageURL = "https://picsum.photos/id/655/300/300";
     UserModel userModel = UserModel();
 
     // writing all the values

@@ -64,9 +64,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 CircleAvatar(
                   backgroundColor: Colors.blueGrey,
-                  radius: 54,
+                  radius: 57,
                   child: CircleAvatar(
-                    radius: 50,
+                    radius: 53,
                     backgroundImage:
                         NetworkImage(loggedInUser.displayIMG.toString()),
                   ),

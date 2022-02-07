@@ -52,10 +52,13 @@ class _SettingPageState extends State<SettingPage> {
                 ],
               ),
               const SizedBox(
-                height: 200,
+                height: 180,
               ),
               Text(
-                "MuvMee Official ",
+                "© MuvMee ALL RIGHT RESERVED ",
+                style: TextStyle(
+                  fontSize: 12,
+                ),
                 textAlign: TextAlign.right,
               )
             ],
