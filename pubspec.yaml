@@ -61,6 +61,8 @@ dependencies:
   curved_navigation_bar: ^1.0.1
   #gradient widget
   gradient_widgets: ^0.6.0
+  #image picker
+  image_picker: ^0.8.5+3
   #camera
   camera: ^0.9.4+3
   #shared preference for onboarding screen
@@ -96,4 +98,3 @@ flutter:
    - family: Nunito
      fonts:
        - asset: assets/fonts/Nunito-Bold.ttf
-  

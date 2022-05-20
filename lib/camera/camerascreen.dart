@@ -1,9 +1,17 @@
+import 'dart:io';
 import 'dart:math';
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_tutorial/camera/scanresult.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter_tutorial/cameraview.dart';
+import 'package:flutter_tutorial/camera/cameraview.dart';
 import 'package:flutter_tutorial/main.dart';
+import 'package:path/path.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_tutorial/model/user_model.dart';
 
 class CameraScreen extends StatefulWidget {
   CameraScreen({Key? key}) : super(key: key);
@@ -19,6 +27,10 @@ class _CameraScreenState extends State<CameraScreen> {
   bool flash = false;
   bool iscamerafront = true;
   double transform = 0;
+  late XFile _image;
+  //model
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
 
   @override
   void initState() {
@@ -52,6 +64,30 @@ class _CameraScreenState extends State<CameraScreen> {
                   );
                 }
               }),
+          Center(
+            child: Container(
+              width: 300,
+              height: 150,
+              decoration: ShapeDecoration(
+                  color: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(2.0),
+                    side: BorderSide(
+                      color: Colors.blue.shade700,
+                      width: 5,
+                    ),
+                  )),
+              child: Center(
+                child: Text(
+                  "Place License plate here",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+          ),
           Positioned(
             bottom: 0.0,
             child: Container(
@@ -81,27 +117,9 @@ class _CameraScreenState extends State<CameraScreen> {
                                 : _cameraController.setFlashMode(FlashMode.off);
                           }),
                       GestureDetector(
-                        // onLongPress: () async {
-                        //   await _cameraController.startVideoRecording();
-                        //   setState(() {
-                        //     isRecoring = true;
-                        //   });
-                        // },
-                        // onLongPressUp: () async {
-                        //   XFile videopath =
-                        //       await _cameraController.stopVideoRecording();
-                        //   setState(() {
-                        //     isRecoring = false;
-                        //   });
-                        //   Navigator.push(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //           builder: (builder) => VideoViewPage(
-                        //                 path: videopath.path,
-                        //               )));
-                        // },
                         onTap: () {
                           if (!isRecoring) takePhoto(context);
+                          //uploadPic(context);
                         },
                         child: isRecoring
                             ? Icon(
@@ -137,7 +155,7 @@ class _CameraScreenState extends State<CameraScreen> {
                     ],
                   ),
                   SizedBox(
-                    height: 1,
+                    height: 5,
                   ),
                 ],
               ),
@@ -148,8 +166,14 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
-  void takePhoto(BuildContext context) async {
+  Future takePhoto(BuildContext context) async {
     XFile file = await _cameraController.takePicture();
+
+    setState(() {
+      _image = file;
+      print('Image path $_image');
+    });
+
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -157,4 +181,21 @@ class _CameraScreenState extends State<CameraScreen> {
                   path: file.path,
                 )));
   }
+
+  // Future uploadPic(BuildContext context) async {
+  //   File file = File(_image.path);
+  //   String fileName = basename(_image.path);
+  //   Reference reference =
+  //       FirebaseStorage.instance.ref().child('CaptureImg/' + fileName);
+  //   UploadTask uploadTask = reference.putFile(file);
+  //   TaskSnapshot taskSnapshot = await uploadTask;
+  //   var uploadUrl = await (await uploadTask).ref.getDownloadURL();
+  //   final url = uploadUrl.toString();
+
+  //   setState(() {
+  //     print("Snapshot Uploaded");
+  //     print(url);
+  //   });
+  //   return url;
+  // }
 }

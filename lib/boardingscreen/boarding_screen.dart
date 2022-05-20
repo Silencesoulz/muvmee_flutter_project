@@ -2,10 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/boardingscreen/slide.dart';
 import 'package:flutter_tutorial/google_page_control.dart';
-import 'package:flutter_tutorial/login.dart';
-import 'package:flutter_tutorial/pagecontrol.dart';
-import 'package:gradient_widgets/gradient_widgets.dart';
-import 'package:flutter_tutorial/google_page_control.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BoardingPage extends StatefulWidget {

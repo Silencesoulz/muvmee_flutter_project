@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tutorial/camerascreen.dart';
+import 'package:flutter_tutorial/camera/camerascreen.dart';
 import 'package:flutter_tutorial/homepage.dart';
 import 'package:flutter_tutorial/settingpage.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -29,7 +29,7 @@ class _PageControl extends State<PageControl> {
       Icon(Icons.settings, size: 35),
     ];
     return Container(
-      color: Colors.blue.shade400,
+      color: Colors.lightBlue.shade500,
       child: SafeArea(
         top: false,
         child: ClipRect(

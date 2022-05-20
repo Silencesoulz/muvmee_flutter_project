@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/model/user_model.dart';
 import 'package:flutter_tutorial/pagecontrol.dart';
@@ -15,6 +16,7 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   final _auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
+
   //user model
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
@@ -56,7 +58,7 @@ class _EditProfileState extends State<EditProfile> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.account_circle_sharp),
+        prefixIcon: Icon(Icons.edit_attributes),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Update your name",
         border: OutlineInputBorder(
@@ -78,12 +80,12 @@ class _EditProfileState extends State<EditProfile> {
       decoration: InputDecoration(
         prefixIcon: Icon(
           Icons.email,
-          color: Colors.blue,
+          color: Colors.blue.shade700,
         ),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "${loggedInUser.email}",
         hintStyle: TextStyle(
-          color: Colors.blueAccent,
+          color: Colors.blue.shade700,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -102,10 +104,11 @@ class _EditProfileState extends State<EditProfile> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.format_list_numbered_sharp, color: Colors.blue),
+        prefixIcon:
+            Icon(Icons.format_list_numbered_sharp, color: Colors.blue.shade700),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "${loggedInUser.licenseplate}",
-        hintStyle: TextStyle(color: Colors.blueAccent),
+        hintStyle: TextStyle(color: Colors.blue.shade700),
         hintMaxLines: 2,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -124,10 +127,11 @@ class _EditProfileState extends State<EditProfile> {
       // },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.account_circle_sharp, color: Colors.blue),
+        prefixIcon:
+            Icon(Icons.account_circle_sharp, color: Colors.blue.shade700),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "${loggedInUser.firstName}",
-        hintStyle: TextStyle(color: Colors.blueAccent),
+        hintStyle: TextStyle(color: Colors.blue.shade700),
         hintMaxLines: 2,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -159,7 +163,7 @@ class _EditProfileState extends State<EditProfile> {
     );
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text('Edit profile'),
         backgroundColor: Colors.blue.shade400,
@@ -200,14 +204,103 @@ class _EditProfileState extends State<EditProfile> {
                       SizedBox(
                         height: 8,
                       ),
-                      CircleAvatar(
-                        backgroundColor: Colors.blueGrey,
-                        radius: 60,
-                        child: CircleAvatar(
-                          radius: 56,
-                          backgroundImage:
-                              NetworkImage(loggedInUser.displayIMG.toString()),
-                        ),
+                      Stack(
+                        children: [
+                          Container(
+                            child: CircleAvatar(
+                              backgroundColor: Colors.blueGrey,
+                              radius: 61,
+                              child: CircleAvatar(
+                                radius: 56,
+                                backgroundImage: NetworkImage(
+                                    loggedInUser.displayIMG.toString()),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 76,
+                            left: 56,
+                            child: RawMaterialButton(
+                              elevation: 2,
+                              fillColor: Colors.grey.shade200,
+                              padding: EdgeInsets.all(8.0),
+                              shape: CircleBorder(),
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                          title: Text(
+                                            'Choose option',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black),
+                                          ),
+                                          content: SingleChildScrollView(
+                                            child: ListBody(
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {},
+                                                  splashColor:
+                                                      Colors.blueAccent,
+                                                  child: Row(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Icon(
+                                                          Icons
+                                                              .picture_in_picture,
+                                                          color: Colors.blue,
+                                                        ),
+                                                      ),
+                                                      Text(" Gallery",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 18,
+                                                              color: Colors
+                                                                  .black)),
+                                                    ],
+                                                  ),
+                                                ),
+                                                InkWell(
+                                                  onTap: () {},
+                                                  splashColor:
+                                                      Colors.blueAccent,
+                                                  child: Row(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Icon(
+                                                          Icons.link_rounded,
+                                                          color: Colors.blue,
+                                                        ),
+                                                      ),
+                                                      Text(" Link",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              fontSize: 18,
+                                                              color: Colors
+                                                                  .black)),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ));
+                                    });
+                              },
+                              child: Icon(Icons.add_a_photo),
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 46,

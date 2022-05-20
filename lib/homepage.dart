@@ -1,11 +1,14 @@
-import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/model/user_model.dart';
 import 'package:flutter_tutorial/settingpagecomponents/verfication_page.dart';
-import 'package:path/path.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+final List<String> imgList = [];
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -26,8 +29,10 @@ class _HomeScreenState extends State<HomeScreen> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
-      setState(() {});
+      loggedInUser = UserModel.fromMap(value.data());
+      setState(() {
+        CircularProgressIndicator();
+      });
     });
   }
 
@@ -44,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: new BoxDecoration(
             color: Colors.blue.shade50,
             borderRadius: new BorderRadius.only(
-              bottomRight: const Radius.elliptical(750, 1300),
+              bottomRight: const Radius.elliptical(350, 40),
             )),
         child: Center(
           child: Padding(
@@ -64,9 +69,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 CircleAvatar(
                   backgroundColor: Colors.blueGrey,
-                  radius: 57,
+                  radius: 61,
                   child: CircleAvatar(
-                    radius: 53,
+                    radius: 56,
                     backgroundImage:
                         NetworkImage(loggedInUser.displayIMG.toString()),
                   ),
@@ -134,5 +139,28 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+}
+
+Future _getData() async {
+  var uploadUrl =
+      "https://firebasestorage.googleapis.com/v0/b/muvmee-flutter.appspot.com/o/plate7.jpeg?alt=media&token=fc31eed9-4f62-408e-badd-2e9f3a1949d5";
+  const url = "https://muvmeevision.herokuapp.com/apitest";
+  final http.Response response = await http.post(
+    Uri.parse("https://muvmeevision.herokuapp.com/apitest"),
+    headers: <String, String>{
+      'Content-Type': 'application/json',
+    },
+    body: jsonEncode(<String, String>{
+      "imgurl": uploadUrl,
+    }),
+  );
+  print(response.statusCode);
+  if (response.statusCode == 200) {
+    print("Get response");
+    print(response);
+    print(response.body);
+  } else {
+    throw Exception('Failed to create album.');
   }
 }
