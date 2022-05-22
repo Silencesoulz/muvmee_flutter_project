@@ -10,10 +10,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 class ScanPage extends StatefulWidget {
   final result;
-  final phonenumber;
   // final _token;
 
-  ScanPage(this.result, this.phonenumber);
+  ScanPage(this.result);
 
   @override
   _ScanPageState createState() => _ScanPageState();

@@ -115,9 +115,9 @@ class _CameraViewPageState extends State<CameraViewPage> {
         'Content-Type': 'application/json',
       },
       body: jsonEncode(<String, String>{
-        // "imgurl": uploadUrl,
-        "imgurl":
-            "https://firebasestorage.googleapis.com/v0/b/muvmee-flutter.appspot.com/o/plate7.jpeg?alt=media&token=fc31eed9-4f62-408e-badd-2e9f3a1949d5",
+        "imgurl": uploadUrl,
+        // "imgurl":
+        //     "https://firebasestorage.googleapis.com/v0/b/muvmee-flutter.appspot.com/o/plate7.jpeg?alt=media&token=fc31eed9-4f62-408e-badd-2e9f3a1949d5",
       }),
     );
     print(response.statusCode);
@@ -125,15 +125,10 @@ class _CameraViewPageState extends State<CameraViewPage> {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => ScanPage(
-                  utf8
-                      .decode(response.bodyBytes)
-                      .split(',')[0]
-                      .replaceAll('[', ''),
-                  utf8
-                      .decode(response.bodyBytes)
-                      .split(',')[1]
-                      .replaceAll(']', ''))));
+              builder: (context) => ScanPage(utf8
+                  .decode(response.bodyBytes)
+                  .split(',')[0]
+                  .replaceAll('[', ''))));
       print("Get response");
       print(response);
       print(response.body);
