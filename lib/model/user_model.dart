@@ -9,6 +9,7 @@ class UserModel {
   String? displayIMG;
   String? phoneNumber;
   String? licenseRequest;
+  String? token;
 
   UserModel({
     this.uid,
@@ -19,6 +20,7 @@ class UserModel {
     this.displayIMG,
     this.phoneNumber,
     this.licenseRequest,
+    this.token,
   });
 
   // retrieve data from server
@@ -32,6 +34,7 @@ class UserModel {
       displayIMG: map['displayIMG'],
       phoneNumber: map['phoneNumber'],
       licenseRequest: map['licenseRequest'],
+      token: map['token'],
     );
   }
 
@@ -45,6 +48,8 @@ class UserModel {
       'licenseplate': licenseplate,
       'displayIMG': displayIMG,
       'licenseRequest': licenseRequest,
+      'phoneNumber': phoneNumber,
+      'token': token,
     };
   }
 }

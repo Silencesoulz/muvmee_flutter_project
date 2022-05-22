@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/model/user_model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'model/user_model.dart';
+import 'package:flutter_tutorial/homepage.dart';
 
 class GoogleSignInProvider extends ChangeNotifier {
   final googleSignIn = GoogleSignIn();
   final _auth = FirebaseAuth.instance;
+
+  UserModel loggedInUser = UserModel();
 
   GoogleSignInAccount? _user;
 
@@ -47,7 +50,8 @@ class GoogleSignInProvider extends ChangeNotifier {
     userModel.firstName = user.displayName;
     userModel.licenseplate = licenseInit;
     userModel.displayIMG = user.photoURL;
-    userModel.phoneNumber = '';
+    userModel.phoneNumber = loggedInUser.phoneNumber;
+    // userModel.token = HomeScreen()._token;
 
     await firebaseFirestore
         .collection("users")

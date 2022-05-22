@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_tutorial/settingpage.dart';
 import 'package:flutter_tutorial/settingpagecomponents/editprofile_page.dart';
 import 'package:http/http.dart' as http;
@@ -9,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/model/user_model.dart';
 import 'package:flutter_tutorial/settingpagecomponents/verfication_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'model/user_model.dart';
 
 final List<String> imgList = [];
 
@@ -19,19 +22,108 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
+int _messageCount = 0;
+
 class _HomeScreenState extends State<HomeScreen> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+  String? _token;
+
+  String constructFCMPayload(String? token) {
+    _messageCount++;
+    return jsonEncode({
+      'token': token,
+      'data': {
+        'via': 'FlutterFire Cloud Messaging!!!',
+        'count': _messageCount.toString(),
+      },
+      'notification': {
+        'title': 'Hello FlutterFire!',
+        'body': 'This notification (#$_messageCount) was created via FCM!',
+      },
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    firebaseMessaging.getToken().then((token) {
+      _token = token;
+      print('token');
+      print(_token);
+    });
+    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+      print("message received");
+      print(event.notification!.body);
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      print('Message clicked!');
+    });
+    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+      print("message recieved");
+      print(event.notification!.body);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Notification"),
+              content: Text(event.notification!.body!),
+              actions: [
+                TextButton(
+                  child: Text("Ok"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          });
+    });
+
+    Future<void> _messageHandler(RemoteMessage message) async {
+      print('background message ${message.notification!.body}');
+    }
+
+    void main() async {
+      WidgetsFlutterBinding.ensureInitialized();
+      await Firebase.initializeApp();
+      FirebaseMessaging.onBackgroundMessage(_messageHandler);
+      runApp(HomeScreen());
+    }
+
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      print('Message clicked!');
+    });
+
+    Future<void> sendPushMessage() async {
+      if (_token == null) {
+        print('Unable to send FCM message, no token exists.');
+        return;
+      }
+
+      try {
+        await http.post(
+          Uri.parse('https://api.rnfirebase.io/messaging/send'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: constructFCMPayload(_token),
+        );
+        print('FCM request for device sent!');
+      } catch (e) {
+        print(e);
+      }
+    }
+
+    //Firebase database
     FirebaseFirestore.instance
         .collection("users")
         .doc(user!.uid)
         .get()
         .then((value) {
       loggedInUser = UserModel.fromMap(value.data());
+
       setState(() {
         CircularProgressIndicator();
       });
@@ -79,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 40,
+                  height: 46,
                 ),
                 RichText(
                   textAlign: TextAlign.center,
@@ -100,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ]),
                 ),
                 SizedBox(
-                  height: 22,
+                  height: 32,
                 ),
                 RichText(
                   textAlign: TextAlign.center,
@@ -136,14 +228,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   textAlign: TextAlign.center,
                   text: TextSpan(children: <TextSpan>[
                     TextSpan(
-                        text: "Phone Number : ",
+                        text: "",
                         style: TextStyle(
                           color: Colors.black87,
                           fontWeight: FontWeight.w700,
                           fontSize: 17,
                         )),
                     TextSpan(
-                      text: "${loggedInUser.phoneNumber}",
+                      text: "",
                       style: TextStyle(
                           decoration: TextDecoration.none,
                           color: Colors.blueAccent,
@@ -171,28 +263,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }
-}
-
-Future _getData() async {
-  var uploadUrl =
-      "https://firebasestorage.googleapis.com/v0/b/muvmee-flutter.appspot.com/o/plate7.jpeg?alt=media&token=fc31eed9-4f62-408e-badd-2e9f3a1949d5";
-  const url = "https://muvmeevision.herokuapp.com/apitest";
-  final http.Response response = await http.post(
-    Uri.parse("https://muvmeevision.herokuapp.com/apitest"),
-    headers: <String, String>{
-      'Content-Type': 'application/json',
-    },
-    body: jsonEncode(<String, String>{
-      "imgurl": uploadUrl,
-    }),
-  );
-  print(response.statusCode);
-  if (response.statusCode == 200) {
-    print("Get response");
-    print(response);
-    print(response.body);
-  } else {
-    throw Exception('Failed to create album.');
   }
 }

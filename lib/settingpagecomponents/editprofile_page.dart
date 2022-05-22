@@ -155,7 +155,7 @@ class _EditProfileState extends State<EditProfile> {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.phone_android),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "${loggedInUser.phoneNumber}",
+        hintText: "Phone number",
         hintMaxLines: 2,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),

@@ -67,6 +67,7 @@ dependencies:
   camera: ^0.9.4+3
   #shared preference for onboarding screen
   shared_preferences: ^2.0.12
+  firebase_messaging: ^11.4.0
   #phone direct
 dev_dependencies:
   flutter_test:
