@@ -7,6 +7,8 @@ class UserModel {
   String? lastName;
   String? licenseplate;
   String? displayIMG;
+  String? phoneNumber;
+  String? licenseRequest;
 
   UserModel({
     this.uid,
@@ -15,6 +17,8 @@ class UserModel {
     this.lastName,
     this.licenseplate,
     this.displayIMG,
+    this.phoneNumber,
+    this.licenseRequest,
   });
 
   // retrieve data from server
@@ -26,6 +30,8 @@ class UserModel {
       lastName: map['lastName'],
       licenseplate: map['licenseplate'],
       displayIMG: map['displayIMG'],
+      phoneNumber: map['phoneNumber'],
+      licenseRequest: map['licenseRequest'],
     );
   }
 
@@ -38,6 +44,7 @@ class UserModel {
       'lastName': lastName,
       'licenseplate': licenseplate,
       'displayIMG': displayIMG,
+      'licenseRequest': licenseRequest,
     };
   }
 }

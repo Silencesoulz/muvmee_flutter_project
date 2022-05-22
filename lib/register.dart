@@ -25,7 +25,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   //final licenseplateEditingController = new TextEditingController();
   final passwordEditingController = new TextEditingController();
   final confirmPasswordEditingController = new TextEditingController();
-
+  final phoneNumberEditingController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     //first name field
@@ -213,6 +213,27 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       ),
     );
 
+    final phoneNumberField = TextFormField(
+      readOnly: false,
+      autofocus: false,
+      controller: phoneNumberEditingController,
+      keyboardType: TextInputType.number,
+      validator: (null),
+      onSaved: (value) {
+        phoneNumberEditingController.text = value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.phone_android),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "Phone number",
+        hintMaxLines: 2,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+    );
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -260,6 +281,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     //   height: 24,
                     // ),
                     emailField,
+                    SizedBox(
+                      height: 24,
+                    ),
+                    phoneNumberField,
                     SizedBox(
                       height: 24,
                     ),
@@ -317,6 +342,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     userModel.lastName = lastNameEditingController.text;
     userModel.licenseplate = licenseInit;
     userModel.displayIMG = ImageURL;
+    userModel.phoneNumber = phoneNumberEditingController.text;
 
     await firebaseFirestore
         .collection("users")

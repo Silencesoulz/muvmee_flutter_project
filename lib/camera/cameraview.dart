@@ -5,10 +5,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tutorial/camera/camerascreen.dart';
 import 'package:flutter_tutorial/camera/scanresult.dart';
 import 'package:camera/camera.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CameraViewPage extends StatefulWidget {
   CameraViewPage({Key? key, required this.path}) : super(key: key);
@@ -69,7 +71,10 @@ class _CameraViewPageState extends State<CameraViewPage> {
                           primary: Colors.white,
                           textStyle: const TextStyle(fontSize: 18),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          CircularProgressIndicator();
+                          uploadPic(context);
+                        },
                         child: const Text('Scan License plate'),
                       ),
                     ],
@@ -110,37 +115,53 @@ class _CameraViewPageState extends State<CameraViewPage> {
         'Content-Type': 'application/json',
       },
       body: jsonEncode(<String, String>{
-        "imgurl": uploadUrl,
+        // "imgurl": uploadUrl,
+        "imgurl":
+            "https://firebasestorage.googleapis.com/v0/b/muvmee-flutter.appspot.com/o/plate7.jpeg?alt=media&token=fc31eed9-4f62-408e-badd-2e9f3a1949d5",
       }),
     );
     print(response.statusCode);
     if (response.statusCode == 200) {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => ScanPage(uploadUrl)));
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ScanPage(
+                  utf8
+                      .decode(response.bodyBytes)
+                      .split(',')[0]
+                      .replaceAll('[', ''),
+                  utf8
+                      .decode(response.bodyBytes)
+                      .split(',')[1]
+                      .replaceAll(']', ''))));
       print("Get response");
       print(response);
       print(response.body);
     } else {
+      Fluttertoast.showToast(
+          msg: "Error กรุณาสแกนใหม่อีกครั้ง", backgroundColor: Colors.red);
+      Navigator.pop(
+          context, MaterialPageRoute(builder: ((context) => CameraScreen())));
       throw Exception('Failed to create album.');
     }
 
-    Future _getData() async {
-      const url = "https://muvmeevision.herokuapp.com/apitest";
-      try {
-        final res = await http.get(Uri.parse(url));
-        List<int> result = [];
-        if (response.statusCode == 200) {
-          final resBody = jsonDecode(res.body);
-          print(resBody);
-        } else {
-          throw Exception('Failed to create album.');
-        }
-      } catch (e) {
-        print("Error : $e");
-      }
-      // send url to model
-      // final http.Response response = await http.post();
-    }
+    // Future _getData() async {
+    //   const url = "https://muvmeevision.herokuapp.com/apitest";
+    //   try {
+    //     final res = await http.get(Uri.parse(url));
+    //     List<int> result = [];
+    //     if (res.statusCode == 200) {
+    //       final resBody = jsonDecode(res.body);
+    //       print(resBody);
+    //     } else {
+    //       throw Exception('Failed to create album.');
+    //     }
+    //   } catch (e) {
+    //     print("Error : $e");
+    //   }
+    //   // send url to model
+    //   // final http.Response response = await http.post();
+    // }
   }
 }
 

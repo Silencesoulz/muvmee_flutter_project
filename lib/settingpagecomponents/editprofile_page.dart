@@ -39,6 +39,7 @@ class _EditProfileState extends State<EditProfile> {
   final emailEditingController = new TextEditingController();
   final licenseplateEditingController = new TextEditingController();
   final currentFirstNameController = new TextEditingController();
+  final phoneNumberEditingController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,9 @@ class _EditProfileState extends State<EditProfile> {
         if (value!.isEmpty) {
           return ("Insert your update name");
         }
-        return null;
+        if (!regex.hasMatch(value)) {
+          return ("Invalid name");
+        }
       },
       onSaved: (value) {
         firstNameEditingController.text = value!;
@@ -60,7 +63,7 @@ class _EditProfileState extends State<EditProfile> {
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.edit_attributes),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        hintText: "Update your name",
+        hintText: "Type your name",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -132,6 +135,27 @@ class _EditProfileState extends State<EditProfile> {
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "${loggedInUser.firstName}",
         hintStyle: TextStyle(color: Colors.blue.shade700),
+        hintMaxLines: 2,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+    );
+
+    final phoneNumberField = TextFormField(
+      readOnly: false,
+      autofocus: false,
+      controller: phoneNumberEditingController,
+      keyboardType: TextInputType.number,
+      validator: (null),
+      onSaved: (value) {
+        phoneNumberEditingController.text = value!;
+      },
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.phone_android),
+        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        hintText: "${loggedInUser.phoneNumber}",
         hintMaxLines: 2,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -319,18 +343,13 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                       licensePlateField,
                       SizedBox(
-                        height: 46,
+                        height: 24,
+                      ),
+                      phoneNumberField,
+                      SizedBox(
+                        height: 36,
                       ),
                       SaveButton,
-                      SizedBox(
-                        height: 24,
-                      ),
-                      SizedBox(
-                        height: 24,
-                      ),
-                      SizedBox(
-                        height: 24,
-                      ),
                       SizedBox(
                         height: 24,
                       ),
@@ -361,6 +380,7 @@ class _EditProfileState extends State<EditProfile> {
       userModel.firstName = firstNameEditingController.text;
       userModel.displayIMG = DisplayPic;
       userModel.licenseplate = LicensePlate;
+      userModel.phoneNumber = phoneNumberEditingController.text;
 
       await firebaseFirestore
           .collection("users")

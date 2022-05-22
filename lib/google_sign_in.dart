@@ -47,6 +47,7 @@ class GoogleSignInProvider extends ChangeNotifier {
     userModel.firstName = user.displayName;
     userModel.licenseplate = licenseInit;
     userModel.displayIMG = user.photoURL;
+    userModel.phoneNumber = '';
 
     await firebaseFirestore
         .collection("users")

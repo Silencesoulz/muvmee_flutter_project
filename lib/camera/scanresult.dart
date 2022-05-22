@@ -3,10 +3,12 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/camera/cameraview.dart';
 import 'package:path/path.dart';
+// import 'package:flutter_phone_direct_call/flutter_phone_direct_call.dart';
 
 class ScanPage extends StatefulWidget {
   final result;
-  const ScanPage(this.result);
+  final phonenumber;
+  const ScanPage(this.result, this.phonenumber);
 
   @override
   _ScanPageState createState() => _ScanPageState();
@@ -15,12 +17,14 @@ class ScanPage extends StatefulWidget {
 class _ScanPageState extends State<ScanPage> {
   @override
   Widget build(BuildContext context) {
+    final number = '0814851591';
+
     return Scaffold(
-      backgroundColor: Colors.blue.shade200,
+      backgroundColor: Colors.blue.shade100,
       appBar: AppBar(
         title: Text(
           "Scanned Result",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.blue),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -32,18 +36,41 @@ class _ScanPageState extends State<ScanPage> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 20, left: 140),
+        padding: const EdgeInsets.only(top: 200, left: 30),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
           children: [
             Text(
-              "${widget.result}",
-              style: TextStyle(fontSize: 28, color: Colors.black),
-            ),
-            SizedBox(height: 64),
-            Text(
-              "ติดต่อเจ้าของรถยนต์",
-              style: TextStyle(fontSize: 18, color: Colors.green),
+              "ผลการสแกนหมายเลขทะเบียน",
               textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 26,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 32),
+            Text(
+              "${widget.result}".replaceAll(
+                '"',
+                '',
+              ),
+              style: TextStyle(fontSize: 22, color: Colors.black),
+            ),
+            SizedBox(height: 32),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                  onSurface: Colors.blue),
+              onPressed: () async {
+                //  FlutterPhoneDirectCall.callNumber(number);
+              },
+              child: Text("ติดต่อเจ้าของรถยนต์"),
+              //child: Text("${widget.phonenumber}".replaceAll('"', '')),
             )
           ],
         ),

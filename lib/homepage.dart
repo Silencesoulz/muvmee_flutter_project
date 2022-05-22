@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:flutter_tutorial/settingpage.dart';
+import 'package:flutter_tutorial/settingpagecomponents/editprofile_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -69,9 +71,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 CircleAvatar(
                   backgroundColor: Colors.blueGrey,
-                  radius: 61,
+                  radius: 70,
                   child: CircleAvatar(
-                    radius: 56,
+                    radius: 65,
                     backgroundImage:
                         NetworkImage(loggedInUser.displayIMG.toString()),
                   ),
@@ -113,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     TextSpan(
                       text: "${loggedInUser.licenseplate}",
                       style: TextStyle(
-                          decoration: TextDecoration.underline,
+                          decoration: TextDecoration.none,
                           color: Colors.blueAccent,
                           fontSize: 17,
                           fontWeight: FontWeight.w700),
@@ -123,6 +125,36 @@ class _HomeScreenState extends State<HomeScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => VerificationPage()));
+                        },
+                    ),
+                  ]),
+                ),
+                SizedBox(
+                  height: 24,
+                ),
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(children: <TextSpan>[
+                    TextSpan(
+                        text: "Phone Number : ",
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 17,
+                        )),
+                    TextSpan(
+                      text: "${loggedInUser.phoneNumber}",
+                      style: TextStyle(
+                          decoration: TextDecoration.none,
+                          color: Colors.blueAccent,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EditProfile()));
                         },
                     ),
                   ]),
